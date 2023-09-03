@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Components\AuthUserManagement\Controllers\CurrentUserController;
+use App\Http\Components\AuthUserManagement\Controllers\LoginController;
+use App\Http\Components\AuthUserManagement\Controllers\UserLogoutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/user'], function () {
+    Route::get('/', CurrentUserController::class);
+
+    Route::post('/login', LoginController::class);
+
+    Route::post('/logout', UserLogoutController::class);
 });
