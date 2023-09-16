@@ -2,10 +2,10 @@
 
 namespace App\Http\Components\AuthUserManagement\Controllers;
 
-use App\Http\Components\AuthUserManagement\Services\WorkflowServices\LogoutUserService;
+use App\Http\Components\AuthUserManagement\Services\LogoutUserService;
 use Illuminate\Http\Request;
 
-class UserLogoutController
+class LogoutController
 {
     public function __invoke(
         LogoutUserService $logout_service,

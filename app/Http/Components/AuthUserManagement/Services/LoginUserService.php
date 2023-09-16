@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Http\Components\AuthUserManagement\Services\WorkflowServices;
+namespace App\Http\Components\AuthUserManagement\Services;
 
-use App\Http\Components\AuthUserManagement\Exceptions\LoginFailsException;
-use App\Http\Components\AuthUserManagement\Exceptions\LoginValidationFailsException;
-use Illuminate\Support\Facades\Validator;
-use Exception;
+use App\Http\Components\AuthUserManagement\LaravelData\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginUserService
 {
-    public function loginUser(mixed $request): array
+    public function loginUser(array $request): User
     {
 
-        $request->authenticate();
+        if (!Auth::attempt([$request['email'], $request['password']])) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Email & Password does not match with our record.',
+            ], 401);
+        }
 
-        $request->session()->regenerate();
+        $user = User::where('email', $request['email'])->first();
 
-        return [
-            'message' => __(
-                'auth.loggedIn'
-            ),
-        ];
+        return $user;
     }
 }

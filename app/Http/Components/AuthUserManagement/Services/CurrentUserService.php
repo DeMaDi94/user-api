@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Components\AuthUserManagement\Services\WorkflowServices;
+namespace App\Http\Components\AuthUserManagement\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

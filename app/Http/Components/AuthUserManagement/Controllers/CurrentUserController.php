@@ -2,7 +2,7 @@
 
 namespace App\Http\Components\AuthUserManagement\Controllers;
 
-use App\Http\Components\AuthUserManagement\Services\WorkflowServices\CurrentUserService;
+use App\Http\Components\AuthUserManagement\Services\CurrentUserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
