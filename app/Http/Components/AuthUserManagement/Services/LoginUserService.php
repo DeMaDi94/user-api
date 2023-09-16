@@ -11,7 +11,7 @@ class LoginUserService
     public function loginUser(array $request): User
     {
 
-        if (!Auth::attempt([$request['email'], $request['password']])) {
+        if (!Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
             return response()->json([
                 'status' => false,
                 'message' => 'Email & Password does not match with our record.',
