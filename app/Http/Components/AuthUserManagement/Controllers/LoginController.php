@@ -2,21 +2,19 @@
 
 namespace App\Http\Components\AuthUserManagement\Controllers;
 
-use App\Http\Components\AuthUserManagement\LaravelData\Requests\LoginRequest;
 use App\Http\Components\AuthUserManagement\Services\LoginUserService;
+use Illuminate\Http\Request;
 
 class LoginController
 {
-    public function __invoke(LoginRequest $request, LoginUserService $login_service)
+    public function __invoke(Request $request, LoginUserService $login_service)
     {
         try {
 
-            $user = $login_service->loginUser($request->all());
+            $message = $login_service->loginUser($request);
 
             return response()->json([
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'message' => $message,
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

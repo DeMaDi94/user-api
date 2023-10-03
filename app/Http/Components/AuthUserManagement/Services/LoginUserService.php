@@ -2,24 +2,25 @@
 
 namespace App\Http\Components\AuthUserManagement\Services;
 
-use App\Http\Components\AuthUserManagement\LaravelData\Requests\LoginRequest;
-use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginUserService
 {
-    public function loginUser(array $request): User
+    public function loginUser(Request $request): string
     {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        if (!Auth::attempt(['email' => $request['email'], 'password' => $request['password']])) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Email & Password does not match with our record.',
-            ], 401);
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return "logged in";
         }
 
-        $user = User::where('email', $request['email'])->first();
 
-        return $user;
+        throw new \Exception("test");
     }
 }
