@@ -3,6 +3,7 @@
 use App\Http\Components\AuthUserManagement\Controllers\CurrentUserController;
 use App\Http\Components\AuthUserManagement\Controllers\LoginController;
 use App\Http\Components\AuthUserManagement\Controllers\LogoutController;
+use App\Http\Components\UserManagement\Controllers\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,9 @@ Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/user'], function (
     Route::get('/', CurrentUserController::class);
 
     Route::post('/logout', LogoutController::class);
+});
+
+
+Route::group(['middleware' => ['auth:sanctum'], 'prefix' => '/users'], function () {
+    Route::get('/', [UserManagementController::class, 'list']);
 });
